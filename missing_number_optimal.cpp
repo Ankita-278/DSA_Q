@@ -1,30 +1,22 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int getLongestSubarray(vector<int>& a, long long k) {
-    int n = a.size(); // size of the array.
-
-    int len = 0;
-    for (int i = 0; i < n; i++) { // starting index
-        long long s = 0; // Sum variable
-        for (int j = i; j < n; j++) { // ending index
-            // add the current element to
-            // the subarray a[i...j-1]:
-            s += a[j];
-
-            if (s == k)
-                len = max(len, j - i + 1);
-        }
+//optimal solution using xor
+int missing_number(int arr[],int n){
+    int xor1=0,xor2=0;
+    for(int i=0;i<=n-1;i++){
+        xor2=xor2^arr[i];
+        xor1=xor1^(i+1);
     }
-    return len;
+    xor1=xor1^n;
+    return xor1^xor2;
 }
-
-int main()
-{
-    vector<int> a = {2, 3, 5, 1, 9};
-    long long k = 10;
-    int len = getLongestSubarray(a, k);
-    cout << "The length of the longest subarray is: " << len << "\n";
-    return 0;
+int main(){
+    int n;
+    cin>>n;
+    int arr[n];
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+    }
+    cout<<missing_number(arr,n);
 }
-
